@@ -1,4 +1,4 @@
-opencart
+Squid Fácil Opencart API
 ========
 
-API para conectividade Open Cart
+Open Cart connectivity API
