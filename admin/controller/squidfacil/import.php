@@ -1,14 +1,15 @@
-<?php 
+<?php
+
 class ControllerModuleSquidfacilImport extends Controller {
-	private $error = array(); 
-     
-  	public function index() {
 
-            $this->document->setTitle("test"); 
+    private $error = array();
 
-		
-		$this->getList();
-  	}
-  
+    public function index() {
+
+        $this->document->setTitle("test");
+        $this->getList();
+    }
+
 }
+
 ?>
