@@ -13,7 +13,7 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/category.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><img src="view/image/product.png" alt="" /> <?php echo $heading_title; ?></h1>
       <div class="buttons">
           <a href="<?php echo $import; ?>" class="button"><?php echo $button_import; ?></a>
       </div>
@@ -25,22 +25,22 @@
             <tr>
               <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
               <td class="left"><?php echo $column_name; ?></td>
-              <td class="right"><?php echo $column_sort_order; ?></td>
+              <td class="right"><?php echo $column_category; ?></td>
               <td class="right"><?php echo $column_action; ?></td>
             </tr>
           </thead>
           <tbody>
-            <?php if ($categories) { ?>
-            <?php foreach ($categories as $category) { ?>
+            <?php if ($products) { ?>
+            <?php foreach ($products as $product) { ?>
             <tr>
-              <td style="text-align: center;"><?php if ($category['selected']) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $category['category_id']; ?>" checked="checked" />
+              <td style="text-align: center;"><?php if ($product['selected']) { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $product['sku']; ?>" checked="checked" />
                 <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $category['category_id']; ?>" />
+                <input type="checkbox" name="selected[]" value="<?php echo $product['sku']; ?>" />
                 <?php } ?></td>
-              <td class="left"><?php echo $category['name']; ?></td>
-              <td class="right"><?php echo $category['sort_order']; ?></td>
-              <td class="right"><?php foreach ($category['action'] as $action) { ?>
+              <td class="left"><?php echo $product['name']; ?></td>
+              <td class="right"><?php echo $product['category']; ?></td>
+              <td class="right"><?php foreach ($product['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
                 <?php } ?></td>
             </tr>
