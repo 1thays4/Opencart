@@ -10,7 +10,7 @@
             $this->data['zone']
             ]]></search>
             <add><![CDATA[
-            $this->data['squidfacil_import'] = $this->url->link('squidfacil/import', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['squidfacil_list'] = $this->url->link('squidfacil/list', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['squidfacil_config'] = $this->url->link('squidfacil/config', 'token=' . $this->session->data['token'], 'SSL');
             ]]></add>
         </operation>
@@ -23,7 +23,7 @@
             <add><![CDATA[
                 <li id="help"><a class="top">Squid Fácil</a>
                   <ul>
-                    <li><a href="<?php echo $squidfacil_import; ?>">Importar produtos</a></li>
+                    <li><a href="<?php echo $squidfacil_list; ?>">listar produtos</a></li>
                     <li><a href="<?php echo $squidfacil_config; ?>">Configurações</a></li>
                   </ul>
                 </li>
