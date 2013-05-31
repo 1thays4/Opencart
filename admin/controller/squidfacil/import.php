@@ -1,6 +1,6 @@
 <?php
 
-class ControllerSquidfacilConfig extends Controller {
+class ControllerSquidfacilImport extends Controller {
 
     public function index() {
         $this->language->load('squidfacil/config');
@@ -60,19 +60,7 @@ class ControllerSquidfacilConfig extends Controller {
 
         $this->data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
 
-        if (isset($this->request->post['squidfacil_email'])) {
-            $this->data['squidfacil_email'] = $this->request->post['squidfacil_email'];
-        } else {
-            $this->data['squidfacil_email'] = $this->config->get('squidfacil_email');
-        }
-
-        if (isset($this->request->post['squidfacil_token'])) {
-            $this->data['squidfacil_token'] = $this->request->post['squidfacil_token'];
-        } else {
-            $this->data['squidfacil_token'] = $this->config->get('squidfacil_token');
-        }
-
-        $this->template = 'squidfacil/config.tpl';
+        $this->template = 'squidfacil/import.tpl';
         $this->children = array(
             'common/header',
             'common/footer'

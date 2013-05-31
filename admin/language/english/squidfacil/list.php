@@ -1,11 +1,14 @@
 <?php
-$_['heading_title']       = 'Squid Fácil';
 
-$_['button_import']       = 'Import Products';
+// Heading
+$_['heading_title'] = 'Squid Fácil';
+$_['page_title'] = 'Settings';
 
-$_['column_name']       = 'Product Name';
-$_['column_category']       = 'Category';
-$_['column_action']       = 'Action';
+$_['button_import'] = 'Import Products';
 
-$_['text_import']       = 'Import';
+$_['column_name'] = 'Product Name';
+$_['column_category'] = 'Category';
+$_['column_action'] = 'Action';
+
+$_['text_import'] = 'Import';
 ?>
