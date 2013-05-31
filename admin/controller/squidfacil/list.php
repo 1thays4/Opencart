@@ -2,14 +2,6 @@
 
 class ControllerSquidfacilList extends Controller {
 
-    function __construct($registry) {
-        parent::__construct($registry);
-        $this->load->model('user/user_group');
-
-        $this->model_user_user_group->addPermission($this->user->getId(), 'access', 'squidfacil/list');
-        $this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'squidfacil/list');
-    }
-
     public function index() {
         $this->load->language('squidfacil/list');
         $this->document->setTitle("test");
