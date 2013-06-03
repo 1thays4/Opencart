@@ -33,7 +33,7 @@ class ControllerSquidfacilList extends Controller {
 
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+            'href' => false,
             'separator' => ' :: '
         );
 
@@ -86,7 +86,12 @@ class ControllerSquidfacilList extends Controller {
 
         if (isset($this->session->data['success'])) {
             $this->data['success'] = $this->session->data['success'];
-
+            if (isset($this->session->data['success_param'])) {
+                $this->data['success_param'] = $this->session->data['success_param'];
+                unset($this->session->data['success_param']);
+            } else {
+                $this->data['success_param'] = '';
+            }
             unset($this->session->data['success']);
         } else {
             $this->data['success'] = '';

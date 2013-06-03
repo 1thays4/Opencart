@@ -49,6 +49,12 @@ class ModelSquidfacilProduct extends Model {
         }
         return $arr;
     }
+    
+    public function importProduct($sku, $request){
+        var_dump($sku);
+        var_dump($request);
+        exit();
+    }
 
 }
 

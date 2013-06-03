@@ -46,13 +46,13 @@ class ControllerSquidfacilConfig extends Controller {
 
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => false,
+            'href' => $this->url->link('squidfacil/list', 'token=' . $this->session->data['token'], 'SSL'),
             'separator' => ' :: '
         );
 
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('page_title'),
-            'href' => $this->url->link('shipping/flat', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => false,
             'separator' => ' :: '
         );
 
