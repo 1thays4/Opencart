@@ -22,11 +22,11 @@ class ControllerSquidfacilImport extends Controller {
 
         $this->data['heading_title'] = $this->language->get('heading_title');
 
-        $this->data['text_enabled'] = $this->language->get('text_enabled');
-        $this->data['text_disabled'] = $this->language->get('text_disabled');
-        $this->data['text_all_zones'] = $this->language->get('text_all_zones');
-        $this->data['text_none'] = $this->language->get('text_none');
+        $this->data['text_default'] = $this->language->get('text_default');
+        $this->data['text_all'] = $this->language->get('text_all');
 
+        $this->data['entry_store'] = $this->language->get('entry_store');
+        $this->data['entry_language'] = $this->language->get('entry_language');
         $this->data['entry_category'] = $this->language->get('entry_category');
 
         $this->data['button_import'] = $this->language->get('button_import');
@@ -71,8 +71,29 @@ class ControllerSquidfacilImport extends Controller {
     }
 
     public function getForm() {
-        $this->data['entry_category'] = $this->language->get('entry_category');
+        
+        $this->load->model('localisation/language');
 
+        $this->data['languages'] = $this->model_localisation_language->getLanguages();
+
+        if (isset($this->request->post['product_language'])) {
+            $this->data['product_language'] = $this->request->post['product_language'];
+        } else {
+            $this->data['product_language'] = array(0);
+        }
+        
+        $this->load->model('setting/store');
+
+        $this->data['stores'] = $this->model_setting_store->getStores();
+
+        if (isset($this->request->post['product_store'])) {
+            $this->data['product_store'] = $this->request->post['product_store'];
+        } elseif (isset($this->request->get['product_id'])) {
+            $this->data['product_store'] = $this->model_catalog_product->getProductStores($this->request->get['product_id']);
+        } else {
+            $this->data['product_store'] = array(0);
+        }
+        
         // Categories
         $this->load->model('catalog/category');
 
