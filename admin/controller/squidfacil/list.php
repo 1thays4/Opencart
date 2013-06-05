@@ -47,24 +47,28 @@ class ControllerSquidfacilList extends Controller {
         );
 
         $results = $this->model_squidfacil_product->getProducts($data);
-        
+
         $product_total = $this->model_squidfacil_product->getCount($data);
 
-        foreach ($results as $result) {
-            $action = array();
+        if (count($results)) {
+            foreach ($results as $result) {
+                $action = array();
 
-            $action[] = array(
-                'text' => $this->language->get('text_import'),
-                'href' => $this->url->link('squidfacil/import', 'token=' . $this->session->data['token'] . '&sku=' . $result['sku'] . $url, 'SSL')
-            );
+                $action[] = array(
+                    'text' => $this->language->get('text_import'),
+                    'href' => $this->url->link('squidfacil/import', 'token=' . $this->session->data['token'] . '&sku=' . $result['sku'] . $url, 'SSL')
+                );
 
-            $this->data['products'][] = array(
-                'sku' => $result['sku'],
-                'name' => $result['name'],
-                'category' => $result['category'],
-                'selected' => isset($this->request->post['selected']) && in_array($result['sku'], $this->request->post['selected']),
-                'action' => $action
-            );
+                $this->data['products'][] = array(
+                    'sku' => $result['sku'],
+                    'name' => $result['name'],
+                    'category' => $result['category'],
+                    'selected' => isset($this->request->post['selected']) && in_array($result['sku'], $this->request->post['selected']),
+                    'action' => $action
+                );
+            }
+        } else {
+            $this->data['products'] = array();
         }
 
         $this->data['heading_title'] = $this->language->get('heading_title');

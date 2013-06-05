@@ -18,6 +18,9 @@
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
+  <?php if ($success) { ?>
+  <div class="success"><?php echo sprintf($success, $success_param); ?></div>
+  <?php } ?>
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/setting.png" alt="" /> <?php echo $heading_title; ?></h1>
