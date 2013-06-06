@@ -158,9 +158,9 @@ class ModelSquidfacilProduct extends Model {
             }
         }
         
-        $data['product_image'][] = $this->importProductImage($item->image);
-        //var_dump($data);
-        //exit();
+        $data['image'] = $this->importProductImage($produto->imagens->imagem);
+//        var_dump($data);
+//        exit();
 
         $data['product_store'] = $request['product_store'];
 
@@ -219,15 +219,16 @@ class ModelSquidfacilProduct extends Model {
     }
     
     public function importProductImage($image){
-        $image_type = substr(strrchr($image, "."), 1);
-        $filename = "tmp." . $image_type;
-        $path = Mage::getBaseDir('media') . DS . 'import' . DS;
+        $image_name = substr(strrchr($image, "/"), 1);
+        $image_type = substr(strrchr($image_name, "."), 1);
+        $subpath = 'data';
+        $path = DIR_IMAGE . $subpath . DIRECTORY_SEPARATOR;
         if(!is_dir($path)){
             mkdir($path);
         }
-        $fullpath =  $path . $filename;
+        $fullpath =  $path . $image_name;
 
-        $ch = curl_init ($item->image);
+        $ch = curl_init ($image);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
@@ -239,10 +240,8 @@ class ModelSquidfacilProduct extends Model {
         $fp = fopen($fullpath,'x');
         fwrite($fp, $raw);
         fclose($fp);
-
-        $product = Mage::getModel('catalog/product')->load($new_product_id);
-        $product->setMediaGallery(array('images' => array(), 'values' => array()));
-        $product->addImageToMediaGallery($fullpath, array('image', 'small_image', 'thumbnail'), false, false);
+        
+        return $subpath . DIRECTORY_SEPARATOR .$image_name;
     }
 
 }
