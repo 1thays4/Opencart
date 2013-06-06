@@ -4,16 +4,16 @@ class ControllerSquidfacilNotification extends Controller {
 
     public function index() {
         $sku = $this->request->get['sku'];
-        var_dump($sku);
+//        var_dump($sku);
 
         if (preg_match("/SQUID[0-9]+/", $sku)) {
             $this->load->model("squidfacil/product");
             $this->load->model("catalog/product");
             $externalProduct = $this->model_squidfacil_product->getProduct($sku);
             $id = $this->model_squidfacil_product->getProductIdBySKU($sku);
-            var_dump($id);
+//            var_dump($id);
             $product = $this->model_catalog_product->getProduct($id);
-            var_dump($product);
+//            var_dump($product);
 
             if ($id && $externalProduct && $product) {
                 $data['sku'] = $product['sku'];
@@ -59,7 +59,7 @@ class ControllerSquidfacilNotification extends Controller {
 
 //                $data['product_category'] = $this->model_catalog_product->getCategories($id);
                 
-                var_dump($data);
+//                var_dump($data);
 
                 $product = $this->model_squidfacil_product->updateProduct($id, $data);
             } else {
