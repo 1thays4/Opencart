@@ -32,7 +32,6 @@ class ModelSquidfacilProduct extends Model {
             'sku' => $sku
         );
 
-        var_dump($parametros);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->getUrl());
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -40,7 +39,6 @@ class ModelSquidfacilProduct extends Model {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parametros));
         $response = curl_exec($ch);
-        var_dump($response);
         curl_close($ch);
         $xml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
         $root = $xml->children();
@@ -53,6 +51,11 @@ class ModelSquidfacilProduct extends Model {
     public function checkDuplicateBySKU($sku) {
         $query = $this->db->query("SELECT DISTINCT count(*) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.sku = '" . $sku . "' AND pd.language_id = '" . (int) $this->config->get('config_language_id') . "'");
         return $query->row['total'];
+    }
+    
+    public function getProductIdBySKU($sku){
+        $query = $this->db->query("SELECT DISTINCT id FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.sku = '" . $sku . "' AND pd.language_id = '" . (int) $this->config->get('config_language_id') . "'");
+        return $query->row['id'];
     }
 
     public function getProducts($data = array()) {
@@ -159,63 +162,12 @@ class ModelSquidfacilProduct extends Model {
         }
         
         $data['image'] = $this->importProductImage($produto->imagens->imagem);
-//        var_dump($data);
-//        exit();
-
+        
         $data['product_store'] = $request['product_store'];
 
         $data['product_category'] = $request['product_category'];
 
         $this->model_catalog_product->addProduct($data);
-        /*
-          'product_id' => string '48' (length=2)
-          'model' => string 'product 20' (length=10)
-          'sku' => string 'test 1' (length=6)
-          'upc' => string '' (length=0)
-          'ean' => string '' (length=0)
-          'jan' => string '' (length=0)
-          'isbn' => string '' (length=0)
-          'mpn' => string '' (length=0)
-          'location' => string 'test 2' (length=6)
-          'quantity' => string '995' (length=3)
-          'stock_status_id' => string '5' (length=1)
-          'image' => string 'data/demo/ipod_classic_1.jpg' (length=28)
-          'manufacturer_id' => string '8' (length=1)
-          'shipping' => string '1' (length=1)
-          'price' => string '100.0000' (length=8)
-          'points' => string '0' (length=1)
-          'tax_class_id' => string '9' (length=1)
-          'date_available' => string '2009-02-08' (length=10)
-          'weight' => string '1.00000000' (length=10)
-          'weight_class_id' => string '1' (length=1)
-          'length' => string '0.00000000' (length=10)
-          'width' => string '0.00000000' (length=10)
-          'height' => string '0.00000000' (length=10)
-          'length_class_id' => string '2' (length=1)
-          'subtract' => string '1' (length=1)
-          'minimum' => string '1' (length=1)
-          'sort_order' => string '0' (length=1)
-          'status' => string '1' (length=1)
-          'date_added' => string '2009-02-08 17:21:51' (length=19)
-          'date_modified' => string '2011-09-30 01:07:06' (length=19)
-          'viewed' => string '0' (length=1)
-          'language_id' => string '1' (length=1)
-          'name' => string 'iPod Classic' (length=12)
-          'description' => string '&lt;div class=&quot;cpt_product_description &quot;&gt;
-          &lt;div&gt;
-          &lt;p&gt;
-          &lt;strong&gt;More room to move.&lt;/strong&gt;&lt;/p&gt;
-          &lt;p&gt;
-          With 80GB or 160GB of storage and up to 40 hours of battery life, the new iPod classic lets you enjoy up to 40,000 songs or up to 200 hours of video or any combination wherever you go.&lt;/p&gt;
-          &lt;p&gt;
-          &lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;
-          &lt;p&gt;
-          Browse through your music collection by flipping through album art. Sel'... (length=1056)
-          'meta_description' => string '' (length=0)
-          'meta_keyword' => string '' (length=0)
-          'tag' => string '' (length=0)
-         * 
-         */
     }
     
     public function importProductImage($image){
