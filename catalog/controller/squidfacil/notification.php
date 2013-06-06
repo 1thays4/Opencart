@@ -57,7 +57,7 @@ class ControllerSquidfacilNotification extends Controller {
 
                 $data['product_store'] = $this->model_squidfacil_product->getProductStores($id);
 
-//                $data['product_category'] = $this->model_catalog_product->getCategories($id);
+                $data['product_category'] = $this->model_squidfacil_product->getProductCategories($id);
                 
 //                var_dump($data);
 
