@@ -65,6 +65,9 @@ class ControllerSquidfacilNotification extends Controller {
             } else {
                 $this->data['error_warning'] = "ignorando produto " . $sku;
             }
+            if(!$externalProduct){
+                $this->model_squidfacil_product->deleteProduct($id);
+            }
         }
     }
 

@@ -311,7 +311,7 @@ class ModelSquidfacilProduct extends Model {
         curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
         $raw = curl_exec($ch);
         curl_close($ch);
-        if (file_exists($fullpath)) {
+        if (is_file($fullpath)) {
             unlink($fullpath);
         }
         $fp = fopen($fullpath, 'x');

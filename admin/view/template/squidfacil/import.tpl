@@ -29,6 +29,13 @@
         </div>
         <div class="content">
             <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+                <?php
+                    foreach($selected as $option){
+                        ?>
+                        <input type="hidden" name="selected[]" value="<?php echo $option; ?>" />
+                        <?php
+                    }
+                ?>
                 <table class="form">
                     <tr>
                         <td><?php echo $entry_store; ?></td>

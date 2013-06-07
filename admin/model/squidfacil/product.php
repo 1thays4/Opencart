@@ -147,17 +147,25 @@ class ModelSquidfacilProduct extends Model {
         $data['tax_class_id'] = '';
         $data['sort_order'] = '';
 
+        $data['keyword'] = false;
+        
         $this->load->model('localisation/language');
 
         if ($request['product_language_all'] == 1) {
             foreach ($this->model_localisation_language->getLanguages() as $language_code => $language) {
                 $data['product_description'][$language['language_id']]['name'] = (string) $produto->nome;
                 $data['product_description'][$language['language_id']]['description'] = (string) $produto->descricao;
+                $data['product_description'][$language['language_id']]['meta_keyword'] = '';
+                $data['product_description'][$language['language_id']]['meta_description'] = '';
+                $data['product_description'][$language['language_id']]['tag'] = '';
             }
         } else {
             foreach ($request['product_language'] as $index => $language_id) {
                 $data['product_description'][$language_id]['name'] = (string) $produto->nome;
                 $data['product_description'][$language_id]['description'] = (string) $produto->descricao;
+                $data['product_description'][$language_id]['meta_keyword'] = '';
+                $data['product_description'][$language_id]['meta_description'] = '';
+                $data['product_description'][$language_id]['tag'] = '';
             }
         }
         
@@ -186,7 +194,7 @@ class ModelSquidfacilProduct extends Model {
         curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
         $raw=curl_exec($ch);
         curl_close ($ch);
-        if(file_exists($fullpath)){
+        if(is_file($fullpath)){
             unlink($fullpath);
         }
         $fp = fopen($fullpath,'x');

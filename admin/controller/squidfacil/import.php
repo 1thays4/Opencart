@@ -18,6 +18,8 @@ class ControllerSquidfacilImport extends Controller {
             $this->redirect($this->url->link('squidfacil/list', 'token=' . $this->session->data['token'], 'SSL'));
         }
         
+        $this->data['selected'] = array();
+        
         $this->data['token'] = $this->session->data['token'];
 
         $this->data['heading_title'] = $this->language->get('heading_title');
@@ -117,6 +119,78 @@ class ControllerSquidfacilImport extends Controller {
                 );
             }
         }
+    }
+    
+    public function bulk(){
+        $this->language->load('squidfacil/import');
+
+        $this->document->setTitle($this->language->get('heading_title'));
+        
+        $this->load->model('squidfacil/product');
+
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->get['step']) && $this->request->get['step'] == 2 && $this->validateForm()) {
+			
+            foreach($this->request->post['selected'] as $selected){
+                $this->model_squidfacil_product->importProduct($selected, $this->request->post);
+            }
+            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->data['success_param'] = $this->request->get['sku'];
+
+            $this->redirect($this->url->link('squidfacil/list', 'token=' . $this->session->data['token'], 'SSL'));
+        }
+        
+        $this->data['selected'] = $this->request->post['selected'];
+        
+        $this->data['token'] = $this->session->data['token'];
+
+        $this->data['heading_title'] = $this->language->get('heading_title');
+
+        $this->data['text_default'] = $this->language->get('text_default');
+        $this->data['text_all'] = $this->language->get('text_all');
+
+        $this->data['entry_store'] = $this->language->get('entry_store');
+        $this->data['entry_language'] = $this->language->get('entry_language');
+        $this->data['entry_category'] = $this->language->get('entry_category');
+
+        $this->data['button_import'] = $this->language->get('button_import');
+
+        if (isset($this->error['warning'])) {
+            $this->data['error_warning'] = $this->error['warning'];
+        } else {
+            $this->data['error_warning'] = '';
+        }
+
+        $this->data['breadcrumbs'] = array();
+
+        $this->data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+            'separator' => false
+        );
+
+        $this->data['breadcrumbs'][] = array(
+            'text' => $this->language->get('heading_title'),
+            'href' => $this->url->link('squidfacil/list', 'token=' . $this->session->data['token'], 'SSL'),
+            'separator' => ' :: '
+        );
+
+        $this->data['breadcrumbs'][] = array(
+            'text' => $this->language->get('page_title'),
+            'href' => false,
+            'separator' => ' :: '
+        );
+
+        $this->data['action'] = $this->url->link('squidfacil/import/bulk', 'token=' . $this->session->data['token'] . '&step=' . 2 , 'SSL');
+
+        $this->getForm();
+
+        $this->template = 'squidfacil/import.tpl';
+        $this->children = array(
+            'common/header',
+            'common/footer'
+        );
+
+        $this->response->setOutput($this->render());
     }
 
     protected function validateForm() {
