@@ -26,6 +26,7 @@ class ControllerSquidfacilConfig extends Controller {
 
         $this->data['entry_email'] = $this->language->get('entry_email');
         $this->data['entry_token'] = $this->language->get('entry_token');
+        $this->data['entry_url'] = $this->language->get('entry_url');
 
         $this->data['button_save'] = $this->language->get('button_save');
         $this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -74,6 +75,8 @@ class ControllerSquidfacilConfig extends Controller {
 
         $this->data['cancel'] = $this->url->link('squidfacil/config', 'token=' . $this->session->data['token'], 'SSL');
 
+        $this->data['squidfacil_url'] = HTTP_CATALOG."index.php?route=squidfacil/notification";
+        
         if (isset($this->request->post['squidfacil_email'])) {
             $this->data['squidfacil_email'] = $this->request->post['squidfacil_email'];
         } else {
