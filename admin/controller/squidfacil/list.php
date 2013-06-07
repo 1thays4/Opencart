@@ -4,7 +4,7 @@ class ControllerSquidfacilList extends Controller {
 
     public function index() {
         $this->load->language('squidfacil/list');
-        $this->document->setTitle("test");
+        $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('squidfacil/product');
 
         $this->getList();
