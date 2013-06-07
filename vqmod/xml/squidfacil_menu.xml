@@ -23,7 +23,7 @@
             <add><![CDATA[
                 <li id="help"><a class="top">Squid Fácil</a>
                   <ul>
-                    <li><a href="<?php echo $squidfacil_list; ?>">listar produtos</a></li>
+                    <li><a href="<?php echo $squidfacil_list; ?>">Listar Produtos</a></li>
                     <li><a href="<?php echo $squidfacil_config; ?>">Configurações</a></li>
                   </ul>
                 </li>
