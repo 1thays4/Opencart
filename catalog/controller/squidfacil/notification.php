@@ -3,8 +3,8 @@
 class ControllerSquidfacilNotification extends Controller {
 
     public function index() {
-        $sku = $this->request->get['sku'];
-//        var_dump($sku);
+        $sku = $this->request->request['sku'];
+//        var_dump($this->request);
 
         if (preg_match("/SQUID[0-9]+/", $sku)) {
             $this->load->model("squidfacil/product");
@@ -53,7 +53,7 @@ class ControllerSquidfacilNotification extends Controller {
                     $data['product_description'][$language['language_id']]['tag'] = '';
                 }
 
-                $data['image'] = $this->model_squidfacil_product->importProductImage($externalProduct->imagens->imagem);
+                $data['image'] = $this->model_squidfacil_product->importProductImage($externalProduct->imagem_principal);
 
                 $data['product_store'] = $this->model_squidfacil_product->getProductStores($id);
 

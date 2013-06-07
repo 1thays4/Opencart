@@ -22,7 +22,7 @@
         <div class="heading">
             <h1><img src="view/image/shipping.png" alt="" /> <?php echo $heading_title; ?></h1>
             <div class="buttons">
-                <a onclick="$('#form').submit();" class="button">
+                <a class="button submitForm">
                     <?php echo $button_import; ?>
                 </a>
             </div>
@@ -106,6 +106,12 @@
     </div>
 </div>
 <script>
+$('.submitForm').live('click', function(){
+    $(this).prop('disabled','disabled');
+    $(this).css({'background-color' : '#333333'});
+    $(this).text('Loading...');
+    $('#form').submit();
+});
 $('#selectall').on('click', function() {
                     $('.languages').attr('checked', $(this).is(":c hecked"));
                     });

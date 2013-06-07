@@ -37,7 +37,7 @@ class ControllerSquidfacilList extends Controller {
             'separator' => ' :: '
         );
 
-        $this->data['list'] = $this->url->link('catalog/product/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+        $this->data['import'] = $this->url->link('squidfacil/import/bulk', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
         $this->data['categories'] = array();
 
@@ -47,7 +47,7 @@ class ControllerSquidfacilList extends Controller {
         );
 
         $results = $this->model_squidfacil_product->getProducts($data);
-
+        
         $product_total = $this->model_squidfacil_product->getCount($data);
 
         if (count($results)) {
@@ -80,8 +80,8 @@ class ControllerSquidfacilList extends Controller {
         $this->data['column_action'] = $this->language->get('column_action');
 
         $this->data['button_import'] = $this->language->get('button_import');
-
-
+        
+        
         if (isset($this->error['warning'])) {
             $this->data['error_warning'] = $this->error['warning'];
         } else {

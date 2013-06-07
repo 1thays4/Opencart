@@ -37,6 +37,10 @@
             <td><?php echo $entry_token; ?></td>
             <td><input type="text" name="squidfacil_token" value="<?php echo $squidfacil_token; ?>"/></td>
           </tr>
+          <tr>
+            <td><?php echo $entry_url; ?></td>
+            <td><?php echo $squidfacil_url; ?></td>
+          </tr>
         </table>
       </form>
     </div>

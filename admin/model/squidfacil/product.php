@@ -169,7 +169,7 @@ class ModelSquidfacilProduct extends Model {
             }
         }
         
-        $data['image'] = $this->importProductImage($produto->imagens->imagem);
+        $data['image'] = $this->importProductImage($produto->imagem_principal);
         
         $data['product_store'] = $request['product_store'];
 
