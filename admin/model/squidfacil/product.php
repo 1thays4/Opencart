@@ -80,9 +80,6 @@ class ModelSquidfacilProduct extends Model {
             'ignorar' => $ignorar
         );
         
-        var_dump($data);
-        var_dump($parametros);
-        
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->getUrl());
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -108,7 +105,6 @@ class ModelSquidfacilProduct extends Model {
                         );
                     }
                 }
-                var_dump($root[2]);
                 $this->setCount($root[2]->total);
             } else {
                 $this->setCount(0);
