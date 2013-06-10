@@ -19,10 +19,6 @@ class ControllerSquidfacilList extends Controller {
 
         $url = '';
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
-        }
-
         $this->data['breadcrumbs'] = array();
 
         $this->data['breadcrumbs'][] = array(
@@ -42,7 +38,7 @@ class ControllerSquidfacilList extends Controller {
         $this->data['categories'] = array();
 
         $data = array(
-            'start' => ($page - 1) * $this->config->get('config_admin_limit'),
+            'start' => ($page - 1),
             'limit' => $this->config->get('config_admin_limit')
         );
 
