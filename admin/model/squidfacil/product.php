@@ -129,11 +129,11 @@ class ModelSquidfacilProduct extends Model {
             $data['location'] = '';
             $data['quantity'] = $produto->estoque;
             $data['minimum'] = '';
-            $data['subtract'] = '';
+            $data['subtract'] = 1;
             $data['stock_status_id'] = '';
             $data['date_available'] = date("Y-m-d H:i:s", time());
             $data['manufacturer_id'] = '';
-            $data['shipping'] = '';
+            $data['shipping'] = 1;
             $data['price'] = $produto->preco_sugerido;
             $data['points'] = '';
             $data['weight'] = ($produto->peso + $produto->peso_embalagem) / 1000;
