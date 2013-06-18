@@ -17,15 +17,15 @@ class ModelShippingSquidfacil extends Model {
         foreach ($this->cart->getProducts() as $item) {
             $product = $this->model_catalog_product->getProduct($item['key']);
             if (preg_match("/SQUID([0-9]+)/", $product['sku'])) {
-                $parametros['produtos'][] = array(
+                $parametros['products'][] = array(
                     'sku' => $product['sku'],
-                    'quantidade' => $item['quantity']
+                    'quantity' => $item['quantity']
                 );
             }
         }
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://www.squidfacil.com.br/webservice/frete/frete.php");
+        curl_setopt($ch, CURLOPT_URL, "https://www.squidfacil.com.br/webservice/freight/freight.php");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -38,16 +38,14 @@ class ModelShippingSquidfacil extends Model {
 
         if ($xml) {
             $root = $xml->children();
-            $transportadoras = $root[1];
-            foreach ($transportadoras as $transportadora) {
-                foreach ($transportadora->servicos->children() as $service) {
-                    //print_r($service);
-                    $quote_data[(string) $service->nome] = array(
-                        'code' => 'squidfacil.' . $service->nome,
-                        'title' => (string) $transportadora->nome . ' - ' . (string) $service->nome,
-                        'cost' => (double) $service->valor,
+            foreach ($root->carrier as $externalCarrier) {
+                foreach ($externalCarrier->service as $service) {
+                    $quote_data[(string) $service->name] = array(
+                        'code' => 'squidfacil.' . $service->name,
+                        'title' => (string) $externalCarrier->name . ' - ' . (string) $service->name,
+                        'cost' => (double) $service->value,
                         'tax_class_id' => 0,
-                        'text' => $this->currency->format($this->currency->convert((double) $service->valor, "BRL", $this->currency->getCode()), $this->currency->getCode(), 1.0000000)
+                        'text' => $this->currency->format($this->currency->convert((double) $service->value, "BRL", $this->currency->getCode()), $this->currency->getCode(), 1.0000000)
                     );
                 }
             }
