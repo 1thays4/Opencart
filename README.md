@@ -1,9 +1,9 @@
-Squid Fácil Opencart API
+Squid Fácil Opencart Module
 ========
 
 Introduction
 ------------
-This is the Squid Fácil Webservice API module. This Opencart module connects to
+This is the Squid Fácil Webservice Module. This Opencart module connects to
 our Webservice and display the products inside the Opencart backend, so the 
 system administrator can import our products, and also its responsible to keep 
 the product stock and information updated.
