@@ -2,9 +2,31 @@
 
 class ModelSquidfacilProduct extends Model {
 
+    private $email;
+    private $token;
     private $count;
     private $url = "https://www.squidfacil.com.br/webservice/produtos/produtos.php";
 
+    function __construct($registry) {
+        parent::__construct($registry);
+        $this->load->model('setting/setting');
+        
+        $setting = $this->model_setting_setting->getSetting('squidfacil');
+        
+        if (
+            isset($setting['squidfacil_email']) && !empty($setting['squidfacil_email']) &&
+            isset($setting['squidfacil_token']) && !empty($setting['squidfacil_token'])   
+        ) {
+            $this->email = $setting['squidfacil_email'];
+            $this->token = $setting['squidfacil_token'];
+        } else{
+            throw new Exception("Dados de configuração incompletos!");
+        }
+
+
+    }
+
+    
     public function getUrl() {
         return $this->url;
     }
@@ -22,13 +44,9 @@ class ModelSquidfacilProduct extends Model {
     }
 
     public function getProduct($sku) {
-        $this->load->model('setting/setting');
-
-        $setting = $this->model_setting_setting->getSetting('squidfacil');
-
         $parametros = array(
-            'email' => $setting['squidfacil_email'],
-            'token' => $setting['squidfacil_token'],
+            'email' => $this->email,
+            'token' => $this->token,
             'sku' => $sku
         );
 
@@ -60,9 +78,6 @@ class ModelSquidfacilProduct extends Model {
 
     public function getProducts($data = array()) {
         $this->load->model('catalog/product');
-        $this->load->model('setting/setting');
-
-        $setting = $this->model_setting_setting->getSetting('squidfacil');
 
         $product_list = $this->model_catalog_product->getProducts();
         $ignorar = array();
@@ -73,8 +88,8 @@ class ModelSquidfacilProduct extends Model {
         }
 
         $parametros = array(
-            'email' => $setting['squidfacil_email'],
-            'token' => $setting['squidfacil_token'],
+            'email' => $this->email,
+            'token' => $this->token,
             'limite' => ($data['limit'] < 1) ? 20 : $data['limit'],
             'pagina' => ($data['start'] < 0) ? 1 : $data['start'] + 1,
             'ignorar' => $ignorar
@@ -172,7 +187,9 @@ class ModelSquidfacilProduct extends Model {
 
             $data['product_store'] = $request['product_store'];
 
-            $data['product_category'] = $request['product_category'];
+            if(isset($request['product_category'])){
+                $data['product_category'] = $request['product_category'];
+            }
 
             $this->model_catalog_product->addProduct($data);
         }

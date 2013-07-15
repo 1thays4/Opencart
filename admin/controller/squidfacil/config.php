@@ -10,11 +10,12 @@ class ControllerSquidfacilConfig extends Controller {
         $this->load->model('setting/setting');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            $this->model_setting_setting->editSetting('squidfacil', $this->request->post);
+            $setting = $this->model_setting_setting->getSetting('squidfacil');
+            $this->model_setting_setting->editSetting('squidfacil', array_merge($setting, $this->request->post));
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            $this->redirect($this->url->link('squidfacil/config', 'token=' . $this->session->data['token'], 'SSL'));
+            //$this->redirect($this->url->link('squidfacil/config', 'token=' . $this->session->data['token'], 'SSL'));
         }
 
         $this->data['heading_title'] = $this->language->get('heading_title');
@@ -88,6 +89,7 @@ class ControllerSquidfacilConfig extends Controller {
         } else {
             $this->data['squidfacil_token'] = $this->config->get('squidfacil_token');
         }
+        
 
         $this->template = 'squidfacil/config.tpl';
         $this->children = array(

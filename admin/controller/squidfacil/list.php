@@ -5,9 +5,24 @@ class ControllerSquidfacilList extends Controller {
     public function index() {
         $this->load->language('squidfacil/list');
         $this->document->setTitle($this->language->get('heading_title'));
-        $this->load->model('squidfacil/product');
+        try {
+            $this->load->model('squidfacil/product');
+            $this->getList();
+        } catch (Exception $e) {
+            $this->data['breadcrumbs'] = array();
 
-        $this->getList();
+            $this->data['heading_title'] = $this->language->get('heading_title');
+
+            $this->data['text_not_found'] = $e->getMessage();
+
+            $this->template = 'error/not_found.tpl';
+            $this->children = array(
+                'common/header',
+                'common/footer'
+            );
+
+            $this->response->setOutput($this->render());
+        }
     }
 
     protected function getList() {
@@ -43,7 +58,7 @@ class ControllerSquidfacilList extends Controller {
         );
 
         $results = $this->model_squidfacil_product->getProducts($data);
-        
+
         $product_total = $this->model_squidfacil_product->getCount($data);
 
         if (count($results)) {
@@ -76,8 +91,8 @@ class ControllerSquidfacilList extends Controller {
         $this->data['column_action'] = $this->language->get('column_action');
 
         $this->data['button_import'] = $this->language->get('button_import');
-        
-        
+
+
         if (isset($this->error['warning'])) {
             $this->data['error_warning'] = $this->error['warning'];
         } else {

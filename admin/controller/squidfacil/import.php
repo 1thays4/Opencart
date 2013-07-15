@@ -134,7 +134,7 @@ class ControllerSquidfacilImport extends Controller {
                 $this->model_squidfacil_product->importProduct($selected, $this->request->post);
             }
             $this->session->data['success'] = $this->language->get('text_success');
-            $this->session->data['success_param'] = $this->request->get['sku'];
+            $this->session->data['success_param'] = implode(", ", $this->request->post['selected']);
 
             $this->redirect($this->url->link('squidfacil/list', 'token=' . $this->session->data['token'], 'SSL'));
         }
