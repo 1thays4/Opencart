@@ -36,7 +36,7 @@ class ModelSquidfacilProduct extends Model {
     }
 
     public function getCount() {
-        return $this->count*20;
+        return $this->count;
     }
 
     public function setCount($count) {
@@ -120,7 +120,7 @@ class ModelSquidfacilProduct extends Model {
                         );
                     }
                 }
-                $this->setCount($root[2]->total);
+                $this->setCount($root[2]->total*$parametros['limite']);
             } else {
                 $this->setCount(0);
             }
